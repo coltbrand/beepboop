@@ -1,18 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, Blog, SignIn, NoPage } from "../../pages";
-import { Header } from "../header";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import * as pages from "../../pages";
 
-export const Router = () => {
+function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Header />}>
-          <Route index element={<Home />} />
-          <Route path="blogs" element={<Blog />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="*" element={<NoPage />} />
-        </Route>
+        <Route path="/" element={<pages.Home />} />
+        <Route path="/login" element={<pages.Login />} />
       </Routes>
     </BrowserRouter>
   );
-};
+}
+
+export default Router;

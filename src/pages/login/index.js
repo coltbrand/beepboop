@@ -3,7 +3,7 @@ import "./index.css";
 import Cookies from "js-cookie";
 import webserver from "../../config/webserver";
 
-export const SignIn = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -41,7 +41,9 @@ export const SignIn = () => {
       password: password,
     };
     const token = await webserver.post("/login", creds);
-    Cookies.set("access_token", token);
+    Cookies.set("access_token", token.data.access_token);
+    Cookies.set("refresh_token", token.data.refresh_token);
+    Cookies.set("expiration", token.data.access_token_expiration);
   };
 
   return (
@@ -81,3 +83,4 @@ export const SignIn = () => {
     </div>
   );
 };
+export default Login;

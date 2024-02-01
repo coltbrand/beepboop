@@ -1,4 +1,2 @@
-export { SignIn } from "./signin";
-export { Home } from "./home";
-export { Blog } from "./blog";
-export { NoPage } from "./nopage";
+export { default as Login } from "./login";
+export { default as Home } from "./home";

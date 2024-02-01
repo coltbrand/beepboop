@@ -1,27 +1,17 @@
-import { Outlet, Link } from "react-router-dom";
-import "./index.css";
+import styled, { createGlobalStyle } from "styled-components";
 
-export const Header = () => {
+function Header() {
   return (
-    <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/blogs">Blogs</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-          <li>
-            <Link to="/signin">Sign In</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <Outlet />
-    </>
+    <div>
+      <h1>Header</h1>
+    </div>
   );
+}
+
+const Navbar = {
+  Wrapper: styled.nav``,
+  Items: styled.ul``,
+  Item: styled.li``,
 };
+
+export default Header;
