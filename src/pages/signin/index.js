@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./index.css";
+import Cookies from "js-cookie";
+import webserver from "../../config/webserver";
 
 export const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -7,7 +9,7 @@ export const SignIn = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const onButtonClick = () => {
+  const onButtonClick = async () => {
     // Set initial error values to empty
     setEmailError("");
     setPasswordError("");
@@ -34,6 +36,12 @@ export const SignIn = () => {
     }
 
     // Authentication calls will be made here...
+    const creds = {
+      username: email,
+      password: password,
+    };
+    const token = await webserver.post("/login", creds);
+    Cookies.set("access_token", token);
   };
 
   return (
