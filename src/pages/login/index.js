@@ -2,8 +2,14 @@ import React, { useState } from "react";
 import "./index.css";
 import Cookies from "js-cookie";
 import webserver from "../../config/webserver";
+import { UserContext } from "../../app";
+import { useContext } from "react";
+import Toast from "../../components/toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -40,10 +46,21 @@ const Login = () => {
       username: email,
       password: password,
     };
-    const token = await webserver.post("/login", creds);
+    const token = await webserver
+      .post("/login", creds)
+      .catch((err) => console.log(err));
     Cookies.set("access_token", token.data.access_token);
     Cookies.set("refresh_token", token.data.refresh_token);
-    Cookies.set("expiration", token.data.access_token_expiration);
+    Cookies.set("access_token_expiration", token.data.expiration);
+    const whoami = await webserver
+      .get("/whoAmI", {
+        headers: {
+          Authorization: Cookies.get("access_token"),
+        },
+      })
+      .catch((err) => console.log(err));
+    setUser(whoami.data);
+    navigate("/");
   };
 
   return (
